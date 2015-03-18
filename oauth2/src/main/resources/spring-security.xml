@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- Global HTTP security -->
+    <sec:http auto-config="true" pattern="/**" use-expressions="true"
+              authentication-manager-ref="userAuthenticationManager">
+        <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+    </sec:http>
+
+    <!-- Spring Security Authentication Manager -->
+    <sec:authentication-manager alias="userAuthenticationManager">
+        <sec:authentication-provider>
+            <sec:user-service id="userDetailsManager">
+                <sec:user name="admin" password="admin" authorities="USER, ADMIN"/>
+                <sec:user name="user" password="user" authorities="USER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+</beans>
